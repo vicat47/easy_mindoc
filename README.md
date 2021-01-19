@@ -7,3 +7,13 @@
 
 # 2. 整体设计
 ![图片](./README.assets/all_design.drawio.png)
+
+# 3. 配置项
+本项目主要使用config.ini进行配置，配置项如下
+```ini
+[web]
+cookie=[你的cookie]
+```
+
+# 4. 项目动向
+被干掉了，它，仅存在了短短两小时
