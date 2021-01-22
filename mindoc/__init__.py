@@ -1,1 +1,1 @@
-from .mindoc import Mindoc
+from .mindoc import MinDoc
