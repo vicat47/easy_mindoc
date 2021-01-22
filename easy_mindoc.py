@@ -1,5 +1,5 @@
 from mindoc import MinDoc
-from markdown import Markdown
+from my_markdown import Markdown
 import sys, getopt
 
 doc = MinDoc({'mindoc_id':'1989c3d786ee8bab56f9447c9d543533',
