@@ -1,0 +1,1 @@
+from .mindoc_config import load_cfg, write_config
