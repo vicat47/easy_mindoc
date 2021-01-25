@@ -9,15 +9,21 @@
 ![图片](./README.assets/all_design.drawio.png)
 
 # 3. 配置项
-本项目主要使用config.ini进行配置，配置项如下
+本项目主要使用config.ini进行配置，配置项如下，会存储在`~/.easy_mindoc/config.ini`下
 ```ini
-[web]
+[user]
 cookie=[你的cookie]
 ```
 
 # 4. 项目动向
 被干掉了，它，仅存在了短短两小时
+> 虽然被干掉了但是还是写出来了。。。
 
 # 5. 搭建快速使用原型
 ## mindoc.py
 用于发送请求，上传图片的
+
+# 6. TODO
+- [x] 写入配置文件
+- [ ] 重新设计指令, 做成类似 git pull xxxxxx 类型的指令
+
