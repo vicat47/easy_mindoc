@@ -19,7 +19,8 @@ class MinDoc:
         data = None
         with open(image_uri, 'rb') as file:
             files = {'editormd-image-file':(image_uri.split('\\')[-1], file, 'image/png')}
-            r = requests.post(url, data, files=files, cookies=self.cookies)
+            r = requests.post(url, data, files=files, cookies=self.cookies, allow_redirects=False)
+            print(r.status_code)
             return json.loads(r.text)
     def upload_images(self, image_uri_arr):
         result = []
