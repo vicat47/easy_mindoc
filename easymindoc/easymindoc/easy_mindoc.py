@@ -9,22 +9,29 @@ import typer
 app = typer.Typer()
 
 @app.command()
-def config(user: str, cookies: str):
+def config(user: str = typer.Option(None), cookies: str = typer.Argument('')):
     typer.echo("正在设置用户和cookies")
     user_data = load_cfg().get('user', {})
+    print(user_data)
+    cookie = {}
     c = cookies.split('; ')
     for item in c:
         res = item.split('=', 1)
-        user_data[res[0]] = res[1]
-    user_data['user']= user
-    write_config(user)
+        cookie[res[0]] = res[1]
+    user_data['cookies'] = cookie
+    if user != None:
+        print(user)
+        user_data['user']= user
+    print(user_data)
+    user_data = {'user' : user_data}
+    write_config(user_data)
 
 @app.command()
-def upload(path: Path = typer.Option(
+def upload(path: Path = typer.Argument(
     Path.cwd(),
     exists=True,
     readable=True
-), project: str = None):
+), project: str = typer.Option(None)):
     user = load_cfg().get('user', {})
     print(path)
     if not user:
@@ -32,6 +39,9 @@ def upload(path: Path = typer.Option(
         return
     user['cookies'] = eval(user.get('cookies', {}))
     if path.is_file():
+        if project == None:
+            typer.echo("请提供project name, Useage: easy_mindoc upload [file_path] --project [project name]")
+            return
         upload_file(user, str(path), project)
         return
     elif path.is_dir():
