@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "easymindoc"
-version = "0.2.1"
+version = "0.3.0"
 description = ""
 authors = ["张尚斌 <zhangshangbin01@spnic.com.cn>"]
 readme = "README.md"
