@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="vicat_easy_mindoc", # Replace with your own username
+    name="easy_mindoc", # Replace with your own username
     version="0.0.1",
     author="vicat",
     author_email="vicat47@qq.com",
@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     entry_points = {
-        'console_scripts': ['vicat_easy_mindoc=easy_mindoc.easy_mindoc:main']
+        'console_scripts': ['easy_mindoc=easy_mindoc.easy_mindoc:main']
     },
     python_requires='>=3.6',
 )

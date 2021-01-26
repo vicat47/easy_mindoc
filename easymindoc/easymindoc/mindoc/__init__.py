@@ -1,0 +1,1 @@
+from .mindoc import MinDoc

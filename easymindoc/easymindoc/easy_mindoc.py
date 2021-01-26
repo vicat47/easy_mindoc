@@ -1,42 +1,64 @@
-from mindoc import MinDoc
-from markdown import Markdown
-from easy_mindoc import load_cfg, write_config
-import sys, getopt, os
+from easymindoc.mindoc import MinDoc
+from easymindoc.markdown import Markdown
+from easymindoc.my_config import load_cfg, write_config
+# import sys, getopt, os
 
+from pathlib import Path
 import typer
 
 app = typer.Typer()
 
-'当前工作路径'
-os.getcwd()
-
-
 @app.command()
 def config(user: str, cookies: str):
     typer.echo("正在设置用户和cookies")
-    user = load_cfg().get('user', {})
-    user['user'], user['cookies'] = user, cookies
+    user_data = load_cfg().get('user', {})
+    c = cookies.split('; ')
+    for item in c:
+        res = item.split('=', 1)
+        user_data[res[0]] = res[1]
+    user_data['user']= user
+    write_config(user)
 
 @app.command()
-def upload(path: str):
+def upload(path: Path = typer.Option(
+    Path.cwd(),
+    exists=True,
+    readable=True
+), project: str = None):
     user = load_cfg().get('user', {})
+    print(path)
     if not user:
         typer.echo("请先设置用户和Cookies, Useage: easy_mindoc config [user_id] [cookies]")
+        return
+    user['cookies'] = eval(user.get('cookies', {}))
+    if path.is_file():
+        upload_file(user, str(path), project)
+        return
+    elif path.is_dir():
+        upload_dir(user, str(path))
         return
     
 
-@app.command()
-def upload_f(path: str, project: str):
-    user = load_cfg().get('user', {})
-    if not user:
-        typer.echo("请先设置用户和Cookies, Useage: easy_mindoc config [user_id] [cookies]")
-        return
+def upload_file(user: dict, path: Path, project: str):
     doc = MinDoc(user.get('cookies'), project, user.get('user'))
-    md = Markdown(path)
+    print(user)
+    md = Markdown(str(path))
+    'TODO: 监测重定向'
     res = doc.upload_images(md.read_img())
     md.create_sync_file(images=res)
     file_path = md.file[:-3] + '-target.md'
     typer.echo(f"上传成功！ 生成的文件路径为 {file_path}")
+
+def upload_dir(user: dict, path: Path(
+    exists=True,
+    file_okay=False,
+    dir_okay=True,
+    writable=False,
+    readable=True,
+    resolve_path=True,
+)):
+    'TODO: 文件夹读取'
+    pass
 
 def main():
     app()
